@@ -77,6 +77,7 @@
 
 import redmine
 import logging
+import logging.handlers
 import sys
 import os
 import time
@@ -637,8 +638,8 @@ def start_logger(options, printerror = False):
             lh = logging.FileHandler(fhname)
         elif handler == "SysLogHandler":
             logformat = options.get("logformat", "%(process)d - %(levelname)s - %(message)s")
-            lh = logging._handlers.SysLogHandler(
-                facility=getattr(logging._handlers.SysLogHandler, options.get("facility","LOG_LOCAL4")),
+            lh = logging.handlers.SysLogHandler(
+                facility=getattr(logging.handlers.SysLogHandler, options.get("facility","LOG_LOCAL4")),
                 address = options.get("syslogdir","/dev/log")
             )
         if options["log2console"]:
