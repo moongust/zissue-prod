@@ -97,7 +97,7 @@ import time
 #import testargs
 import datetime
 
-VERSION="0.2 rev4"
+VERSION="0.2 rev5"
 
 OPTIONS = dict(
     log2console = False,                 # True for test purposes
@@ -407,7 +407,7 @@ class Issue(object):
             try:
                 logger.info("issue._update_redmine_issue: argarray={0}".format(argarray))
                 self.rd.issue.update(self.issuenum,**argarray)
-                logger.info("issue._update_redmine_issue: Update issue:{0} was successfull")
+                logger.info("issue._update_redmine_issue: Update issue:{0} was successfull".format(self.issuenum))
             except Exception as err:
                 logger.error("issue._update_redmine_issue:"
                              " Update issue:{0} was unsuccess, error:{1}".format(self.issuenum,err))
