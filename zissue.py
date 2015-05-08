@@ -97,7 +97,7 @@ import time
 #import testargs
 import datetime
 
-VERSION="0.2 rev2"
+VERSION="0.2 rev4"
 
 OPTIONS = dict(
     log2console = False,                 # True for test purposes
@@ -460,7 +460,7 @@ class Issue(object):
         event_age = self.parameters["event_age"]
         self.logger.debug("issue._calculate_hours_age started, event_age={0}".format(event_age))
         age=float(0)
-        mn = dict(d=24,h=1,m=1/60)
+        mn = dict(d=24.0,h=1.0,m=1.0/60)
         for s in event_age.split():
             for char in mn.keys():
                 try:
