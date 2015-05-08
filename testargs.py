@@ -86,7 +86,7 @@ testargs_OfficeUP = ["",
 """office_id: vuzs-1410
 event_id: 544445
 event_recovery_datetime: 2014.12.25 17:53:04
-event_age: 1d 4h 51m
+event_age: 1m
 status_id: 10
 night_status_id: 5
 night_office_reason: В нерабочее время

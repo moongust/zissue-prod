@@ -1,78 +1,91 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+
 """
-#
-# sys.argv[1] - To - URL:redmine API key, or "kspd-tracker"
-# sys.argv[2] - Subject - [ChannelDOWN|ChannelUP|OfficeDOWN|OfficeUP]
-# sys.argv[3] - Body - set of lines
-#
-# 1) Channel DOWN message, Subject -> message_type = ChannelDOWN
-# project_id: 2         2-Test, 1-incidents
-# tracker_id: 6         5-office, 6-channel
-# status_id: 1          1-Новая
-# priority_id: 2        2-
-# assigned_to_id: 6     6-Отдел поддержки сети
-# watcher_user_ids:     нет
-# channel_id: {INVENTORY.SITE.ZIP}
-# bank: {INVENTORY.SITE.ADDRESS.A}
-# office: {INVENTORY.SITE.ADDRESS.B}
-# event_id: {EVENT.ID}
-# hub: {INVENTORY.SITE.ADDRESS.C}
-# channel_type: {INVENTORY.SITE.NOTES}
-# event_date: {EVENT.DATE}
-# event_time: {EVENT.TIME}
-# office_comments:  {INVENTORY.POC.PRIMARY.NOTES}
-# fields = "message_type project_id tracker_id status_id priority_id assigned_to_id watcher_user_ids "
-# "channel_id bank office event_id hub channel_type event_date event_time office_comments"
-#
-# 2) Channel UP message, Subject -> message_type = ChannelUP
-# event_id: {EVENT.ID}
-# channel_id: {INVENTORY.SITE.ZIP}
-# event_recovery_date: {EVENT.RECOVERY.DATE}
-# event_recovery_type: {EVENT.RECOVERY.TIME}
-# event_age: {EVENT.AGE}
-# status_id: 10          10-Автоматически решена
-# night_status_id: 5
-# night_reason: В нерабочее время
-# fields = "message_type channel_id event_id event_recovery_date event_recovery_time event_age status_id
-#           night_status_id, night_reason"
-#
-# 3) Office DOWN message, Subject -> message_type = OfficeDOWN
-# project_id: 2         2-Test, 1-incidents
-# tracker_id: 5         5-office, 6-channel
-# status_id: 1          1-Новая
-# priority_id: 4        2-
-# assigned_to_id: 6     6-Отдел поддержки сети
-# watcher_user_ids:     пусто
-# office_id: {INVENTORY.SITE.ZIP}
-# bank: {INVENTORY.SITE.ADDRESS.A}
-# office: {INVENTORY.SITE.ADDRESS.B}
-# event_id: {EVENT.ID}
-# event_date: {EVENT.DATE}
-# event_time: {EVENT.TIME}
-# office_comments:  {INVENTORY.POC.PRIMARY.NOTES}
-# fields = "message_type project_id tracker_id status_id priority_id assigned_to_id watcher_user_ids "
-# "office_id bank office event_id event_date event_time office_comments"
-#
-# 4) Office UP message, Subject -> message_type = OfficeUP
-# event_id: {EVENT.ID}
-# office_id: {INVENTORY.SITE.ZIP}
-# event_recovery_date: {EVENT.RECOVERY.DATE}
-# event_recovery_type: {EVENT.RECOVERY.TIME}
-# event_age: {EVENT.AGE}
-# status_id: 10          10-Автоматически решена
-# night_status_id: 5
-# night_reason: В нерабочее время
-# fields = "message_type office_id event_id event_recovery_date event_recovery_time event_age status_id
-#           night_status_id, night_reason"
-#
-# Other redmine fields
-# subject (string) – (required). Issue subject.
-#    description (string) – (optional). Issue description.
-#    start_date (string or date object) – (optional). Issue start date.
-#    due_date (string or date object) – (optional). Issue end date.
-#    custom_fields
-#
+sys.argv[1] - To - URL:redmine API key, or "kspd-tracker"
+sys.argv[2] - Subject - [ChannelDOWN|ChannelUP|OfficeDOWN|OfficeUP]
+sys.argv[3] - Body - set of lines
+
+1) Channel DOWN message,
+To = kspd-tracker
+Subject = ChannelDOWN
+Body =
+project_id: 2
+tracker_id: 6
+status_id: 1
+priority_id: 2
+assigned_to_id: 6
+watcher_user_ids:
+channel_id: {INVENTORY.SITE.ZIP}
+bank: {INVENTORY.SITE.ADDRESS.A}
+office: {INVENTORY.SITE.ADDRESS.B}
+event_id: {EVENT.ID}
+hub: {INVENTORY.SITE.ADDRESS.C}
+channel_type: {INVENTORY.SITE.NOTES}
+event_datetime: {EVENT.DATE} {EVENT.TIME}
+office_comments:  {INVENTORY.POC.PRIMARY.NOTES}
+
+fields = "message_type project_id tracker_id status_id priority_id assigned_to_id watcher_user_ids "
+         "channel_id bank office event_id hub channel_type event_date event_time office_comments"
+
+2) Channel UP message, Subject -> message_type = ChannelUP
+To = kspd-tracker
+Subject = ChannelUP
+Body =
+event_id: {EVENT.ID}
+channel_id: {INVENTORY.SITE.ZIP}
+event_recovery_datetime: {EVENT.RECOVERY.DATE} {EVENT.RECOVERY.TIME}
+event_age: {EVENT.AGE}
+status_id: 10
+night_status_id: 5
+night_channel_reason: В нерабочее время
+
+fields = "message_type channel_id event_id event_recovery_date event_recovery_time event_age status_id"
+         "night_status_id, night_reason"
+
+3) Office DOWN message, Subject -> message_type = OfficeDOWN
+To = kspd-tracker
+Subject = ChannelDOWN
+Body =
+project_id: 2
+tracker_id: 5
+status_id: 1
+priority_id: 4
+assigned_to_id: 6
+watcher_user_ids:
+office_id: {INVENTORY.SITE.ZIP}
+bank: {INVENTORY.SITE.ADDRESS.A}
+office: {INVENTORY.SITE.ADDRESS.B}
+event_id: {EVENT.ID}
+event_datetime: {EVENT.DATE} {EVENT.TIME}
+office_comments:  {INVENTORY.POC.PRIMARY.NOTES}
+
+fields = "message_type project_id tracker_id status_id priority_id assigned_to_id watcher_user_ids "
+         "office_id bank office event_id event_date event_time office_comments"
+
+4) Office UP message, Subject -> message_type = OfficeUP
+To = kspd-tracker
+Subject = ChannelDOWN
+Body =
+event_id: {EVENT.ID}
+office_id: {INVENTORY.SITE.ZIP}
+event_recovery_datetime: {EVENT.RECOVERY.DATE} {EVENT.RECOVERY.TIME}
+event_age: {EVENT.AGE}
+status_id: 10
+night_status_id: 5
+night_office_reason: В нерабочее время
+
+fields = "message_type office_id event_id event_recovery_date event_recovery_time event_age status_id"
+         "night_status_id, night_reason"
+
+Установка:
+1) переписать скрипт в каталог скриптов заббикса (вероятно /usr/lib/zabbix/alertscripts)
+2) сменить владельца и группу на zabbix.zabbix: chown zabbix:zabbix zissue.py
+3) установить для файла права на выполнение chmod ug+x zissue.py
+4) проверить ls -la наличие права на чтение и запуск и у группы zabbix
+5) добавить в файл /etc/rsyslog.conf строку: local4.*   /var/log/zissue.log, перезапустить службу rsyslog
+    service restart rsyslog
+6) Настроить zabbix
 """
 
 import redmine
@@ -81,21 +94,23 @@ import logging.handlers
 import sys
 import os
 import time
-import testargs
+#import testargs
 import datetime
 
-VERSION="0.2"
+VERSION="0.2 rev2"
 
 OPTIONS = dict(
     log2console = False,                 # True for test purposes
-    #loghandler="FileHandler",           # Обработчик логов, FileHandler or SysLogHandler,
-    logdir="C:/Amv/Temp/zissue/log",    # Каталог для логфайлов или
-    loghandler="SysLogHandler",
+    loghandler="FileHandler",           # Обработчик логов, FileHandler or SysLogHandler,
+    #logdir="C:/Amv/Temp/zissue/log",    # Каталог для логфайлов или
+    logdir="/var/log/zabbix/zissue",
+    #loghandler="SysLogHandler",
     syslogdir="/dev/log",               # сокет для SysLogHandler или адрес внешнего сервера
     facility = "LOG_LOCAL4",            # facility для SysLogHandler
     logname="zissue",                   # logger name, filename for FileHandler
     #tmpdir="C:/Amv/Temp/zissue/temp",   # Каталог временных файлов
     tmpdir="/tmp",                      # Каталог временных файлов
+    #loglevel="DEBUG",                   # Уровень логирования (DEBUG for test purposes)
     loglevel="INFO",                   # Уровень логирования (DEBUG for test purposes)
     archivelog=False,  # Архивирование логфайлов после ? нереализовано, требует доработки...
     server="http://kspd-tracker.life.corp",
@@ -263,8 +278,8 @@ class Issue(object):
         logger.debug("issue._read_file started")
         try:
             fd = open(self.filename, mode="r")
-            line1 = fd.readline()
-            line2 = fd.readline()
+            line1 = fd.readline().strip()
+            line2 = fd.readline().strip()
             self.issuenum = int(line1)
             self.issuedatetime = line2
             logger.info("issue._read_file: file {0} read success. Line1={1}, Line2={2}".format(self.filename,
@@ -442,16 +457,18 @@ class Issue(object):
         return body
 
     def _calculate_hours_age(self):  #
-        self.logger.debug("issue._calculate_hours_age started")
-        age=0
+        event_age = self.parameters["event_age"]
+        self.logger.debug("issue._calculate_hours_age started, event_age={0}".format(event_age))
+        age=float(0)
         mn = dict(d=24,h=1,m=1/60)
-        for s in self.parameters["event_age"].split():
+        for s in event_age.split():
             for char in mn.keys():
                 try:
                     age+=float(s[0:s.index(char)])*mn[char]
                 except: pass
         self.age = age
-        self.parameters["event_age"] = "{0:.2f}".format(age).replace(".",",")
+        age = "{0:.2f}".format(age).replace(".",",")
+        self.parameters["event_age"] = age
         self.logger.debug("issue._calculate_hours_age: age={0}".format(age))
         return True
 
@@ -581,7 +598,6 @@ def prepare_args(args, logger):
         to, subject, body = args[1], args[2], args[3]
     else:
         error = "def prepare_args: len(args)!=4"
-        logger.critical(error)
         raise ArgvError(error)
     # тут будем собирать параметры
     parameters = {}
@@ -607,12 +623,10 @@ def prepare_args(args, logger):
                 [parameters[key] for key in "message_type office_id event_id".split()]))
         else:
             error = "def prepare_args: critical error, message_type={0} incorrect".format(message_type)
-            logger.critical(error)
             raise ArgvError(error)
         logger.debug("def prepare_args: parameters dict: {0}".format(parameters))
     except (ValueError, KeyError) as err:
         error = "def prepare_args: critical ValueError or KeyError: {0}".format(err)
-        logger.critical(error)
         raise ArgvError(error)
     return parameters
 
@@ -666,7 +680,7 @@ def main():
     if not logger: sys.exit(1)
     # в args присваиваем список параметров для целей тестирования или sys.argv для боевого скрипта
 
-    args = testargs.testargs_ChannelDOWN
+    #args = testargs.testargs_ChannelDOWN
     #args = testargs.testargs_ChannelUP
     #args = testargs.testargs_ChannelDOWNnight
     #args = testargs.testargs_ChannelUPnight
@@ -676,6 +690,7 @@ def main():
     #args = testargs.testargs_OfficeDOWNnight
     #args = testargs.testargs_OfficeUPnight
 
+    args = sys.argv
 
     try:
         parameters = prepare_args(args,logger)
@@ -687,6 +702,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
